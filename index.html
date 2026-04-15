@@ -27,7 +27,7 @@
             --hover-light: rgba(0, 113, 227, 0.15);
         }
 
-        /* 暗黑模式 */
+        /* 深色模式 */
         [data-theme="dark"] {
             --bg: linear-gradient(135deg, #121212, #1a1a2e);
             --text: #ffffff;
@@ -44,7 +44,7 @@
 
         /* 涂鸦模式 */
         [data-theme="colorful"] {
-            /* 主题变量：鲜艳的霓虹配色 */
+            /* 主题变量：更鲜艳的霓虹配色 */
             --bg: linear-gradient(135deg, #4a148c, #880e4f, #1a237e);
             --text: #ffffff;
             --card: rgba(74, 20, 140, 0.85);
@@ -54,7 +54,7 @@
             --gray-text: #f8bbd0;
             --hover-light: rgba(0, 255, 234, 0.35);
 
-            /* 全屏超炫彩虹流光背景 */
+            /* 流光背景 */
             background: linear-gradient(90deg, 
                 #ff0080,  /* 玫红 */
                 #ff4000,  /* 亮橙 */
@@ -66,13 +66,13 @@
             );
             background-size: 800% 800%;
             /* 更快、更丝滑的无限流动动画 */
-            animation: rainbowFlow 4s linear infinite;
+            animation: rainbowFlow 8s linear infinite;
             /* 增强霓虹发光效果 */
             box-shadow: inset 0 0 80px rgba(255, 255, 255, 0.2);
         }
 
         /* ==========================
-        			涂鸦画布
+        涂鸦画布
         =========================== */
         #doodleCanvas {
             position: fixed;
@@ -163,87 +163,41 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* ==========================
-      		暗色系彩色 F1 赛车速度背景
+   /* ==========================
+         四大车队配色：木瓜橙/梅奔蓝/法拉利红/红牛深蓝
         =========================== */
         [data-theme="f1"] {
-            /* 暗色系彩色基底：深黑蓝 + 暗紫 + 暗玫红，竞速感拉满 */
-            --bg: linear-gradient(135deg, #070714, #140b2b, #240c21);
-            --text: #ffffff;
-            --card: rgba(22, 22, 42, 0.9);
-            --btn: rgba(32, 22, 52, 0.7);
-            --btn-text: #e0e0ff;
-            --active: #e10600; /* 保留F1经典红 */
-            --gray-text: #b0b0d8;
-            --hover-light: rgba(225,6,0,0.25);
-
-            /* 暗彩流光背景 + 速度动画 */
-            background: linear-gradient(90deg, #e10600, #7b00ff, #0044ff, #e10600);
-            background-size: 600% 600%;
-            animation: f1RainbowSpeed 6s linear infinite;
+            /* 四大车队主打色四角渐变 */
+            background: radial-gradient(circle at 0% 0%, #FF8700, 
+                                        circle at 100% 0%, #00D2BE,
+                                        circle at 0% 100%, #DC0000,
+                                        circle at 100% 100%, #1E41B0);
+            background: radial-gradient(ellipse at center,
+                rgba(0,0,0,0.3) 0%,
+                transparent 50%),
+                radial-gradient(circle at 0% 0%, #FF8700 0%, transparent 70%),
+                radial-gradient(circle at 100% 0%, #00D2BE 0%, transparent 70%),
+                radial-gradient(circle at 0% 100%, #DC0000 0%, transparent 70%),
+                radial-gradient(circle at 100% 100%, #1E41B0 0%, transparent 70%);
+            background-blend-mode: screen;
             background-attachment: fixed;
             position: relative;
             overflow: hidden;
         }
 
-        /* 第一层：超高速彩色横向流光（速度感核心） */
-        [data-theme="f1"] body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: repeating-linear-gradient(
-                to right,
-                transparent,
-                rgba(225,6,0,0.12) 20px,
-                rgba(123,0,255,0.1) 40px,
-                transparent 60px
-            );
-            background-size: 100% 100%;
-            animation: f1SpeedFlow 1.2s linear infinite;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        /*  第二层：斜向彩色冲刺速度线 */
-        [data-theme="f1"] body::after {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: repeating-linear-gradient(
-                135deg,
-                transparent,
-                rgba(0,68,255,0.08) 20px,
-                transparent 40px
-            );
-            background-size: 200% 200%;
-            animation: f1DiagFlow 2.5s linear infinite;
-            pointer-events: none;
-            z-index: -2;
-        }
-
-        /*  第三层：彩色脉冲光效 */
+        /*保留脉冲光效，微调颜色以配合四色主题 */
         [data-theme="f1"]::after {
             content: "";
             position: fixed;
             width: 100vw;
             height: 100vh;
-            background: radial-gradient(circle, rgba(225,6,0,0.15) 0%, rgba(123,0,255,0.1) 50%, transparent 80%);
-            animation: pulse 2s ease-in-out infinite;
+            background: radial-gradient(circle, rgba(255,135,0,0.12) 0%, rgba(0,210,190,0.08) 35%, rgba(220,0,0,0.08) 65%, rgba(30,65,176,0.12) 100%);
+            animation: pulse 4s ease-in-out infinite;
             pointer-events: none;
             z-index: -3;
         }
-
-        /* F1 专属暗彩流光动画 */
-        @keyframes f1RainbowSpeed {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        @keyframes f1SpeedFlow { 0% { background-position: 0 0; } 100% { background-position: 600px 0; } }
-        @keyframes f1DiagFlow { 0% { background-position: 0 0; } 100% { background-position: 200px 200px; } }
-        @keyframes pulse { 0% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(1); opacity: 0.5; } }
-
-        /* 打字轮胎滚动 */
+     
+	   /* 打字轮胎滚动 */
         [data-theme="f1"] #query {
             position: relative;
             background-image: none;
@@ -276,7 +230,7 @@
         }
 
         /* ==========================
-        	 F1 搜索按钮 hover 变赛车
+         F1 搜索按钮 hover 变赛车
         =========================== */
         [data-theme="f1"] .search-btn:hover span { 
             display: none; 
@@ -306,23 +260,37 @@
             box-shadow: 0 0 14px rgba(225,6,0,0.5);
         }
 
-        /*  F1 模式 hover 高亮：长方形 */
+        /* F1 模式 hover 高亮：长方形 */
         [data-theme="f1"] .bubble-highlight {
             border-radius: 5px !important;
         }
 
-        body {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: var(--bg);
-            color: var(--text);
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
-        }
+   body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: transparent;  /*  关键修改：让 html 的动画背景显示出来 */
+    color: var(--text);
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+/* 浅色模式 */
+[data-theme="light"] body {
+    background: var(--bg);
+}
+
+/* 深色模式 */
+[data-theme="dark"] body {
+    background: var(--bg);
+}
+
+/* F1 模式 */
+[data-theme="f1"] body {
+    background: transparent;
+}
 
         /* 主题切换 */
         #themeToggle {
@@ -489,7 +457,7 @@
         }
 
         /* ==========================
-         引擎和自定义链接容器
+        引擎和自定义链接容器
         =========================== */
         .engines-section {
             width: 100%;
@@ -789,7 +757,7 @@
             }
         }
 
-        /*顶部弹窗容器：支持叠加显示 */
+        /* 顶部弹窗容器：支持叠加显示 */
         .f1-modal {
             position: fixed;
             top: 20px;
@@ -823,7 +791,7 @@
         }
 
         /* ==========================
-        	鼠标跟随光点 + 拖尾效果（全局适配主题）
+        鼠标跟随光点 + 拖尾效果（全局适配主题）
         =========================== */
         .mouse-follower {
             position: fixed;
@@ -1007,7 +975,7 @@
         });
 
         // ==========================
-        // 炫彩模式涂鸦功能
+        // 涂鸦功能
         // ==========================
         const canvas = document.getElementById('doodleCanvas');
         const ctx = canvas.getContext('2d');
@@ -1140,7 +1108,7 @@
         let currentSearchEngine = document.querySelector('.engine.active')?.dataset.url || 'https://cn.bing.com/search?q=';
 
         // ==========================
-        //  自定义链接功能（修复版）
+        // 自定义链接功能（修复版）
         // ==========================
         const customLinksContainer = document.getElementById('customLinksContainer');
         const addLinkBtn = document.getElementById('addLinkBtn');
@@ -1475,7 +1443,7 @@
 })();
 	
 	// ==========================
-//  删除标签确认功能
+// 删除标签确认功能
 // ==========================
 (function initDeleteConfirmation() {
     // 保存原始的 bindCustomLinkEvents 函数
@@ -1688,7 +1656,7 @@
 })();
 	
 	// ==========================
-//  涂鸦自动保存和恢复功能
+// 涂鸦自动保存和恢复功能
 // ==========================
 (function initDoodleAutoSave() {
     // 保存涂鸦到 localStorage
