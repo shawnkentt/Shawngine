@@ -27,7 +27,7 @@
             --hover-light: rgba(0, 113, 227, 0.15);
         }
 
-        /* 黑色炫彩模式 */
+        /* 暗黑模式 */
         [data-theme="dark"] {
             --bg: linear-gradient(135deg, #121212, #1a1a2e);
             --text: #ffffff;
@@ -42,9 +42,9 @@
             animation: rainbowFlow 8s linear infinite;
         }
 
-        /* 炫彩模式 - 极致升级版 */
+        /* 涂鸦模式 */
         [data-theme="colorful"] {
-            /* 主题变量：更鲜艳的霓虹配色 */
+            /* 主题变量：鲜艳的霓虹配色 */
             --bg: linear-gradient(135deg, #4a148c, #880e4f, #1a237e);
             --text: #ffffff;
             --card: rgba(74, 20, 140, 0.85);
@@ -72,7 +72,7 @@
         }
 
         /* ==========================
-        ✅ 🎨 炫彩模式涂鸦画布
+        			涂鸦画布
         =========================== */
         #doodleCanvas {
             position: fixed;
@@ -164,7 +164,7 @@
         }
 
         /* ==========================
-        ✅ 🔥 全新：暗色系彩色 F1 赛车速度背景
+      		暗色系彩色 F1 赛车速度背景
         =========================== */
         [data-theme="f1"] {
             /* 暗色系彩色基底：深黑蓝 + 暗紫 + 暗玫红，竞速感拉满 */
@@ -186,7 +186,7 @@
             overflow: hidden;
         }
 
-        /* 🔥 第一层：超高速彩色横向流光（速度感核心） */
+        /* 第一层：超高速彩色横向流光（速度感核心） */
         [data-theme="f1"] body::before {
             content: "";
             position: fixed;
@@ -204,7 +204,7 @@
             z-index: -1;
         }
 
-        /* 🔥 第二层：斜向彩色冲刺速度线 */
+        /*  第二层：斜向彩色冲刺速度线 */
         [data-theme="f1"] body::after {
             content: "";
             position: fixed;
@@ -221,7 +221,7 @@
             z-index: -2;
         }
 
-        /* 🔥 第三层：彩色脉冲光效 */
+        /*  第三层：彩色脉冲光效 */
         [data-theme="f1"]::after {
             content: "";
             position: fixed;
@@ -276,7 +276,7 @@
         }
 
         /* ==========================
-        ✅ 🏎️ F1 搜索按钮 hover 变赛车
+        	 F1 搜索按钮 hover 变赛车
         =========================== */
         [data-theme="f1"] .search-btn:hover span { 
             display: none; 
@@ -306,7 +306,7 @@
             box-shadow: 0 0 14px rgba(225,6,0,0.5);
         }
 
-        /* ✅ F1 模式 hover 高亮：长方形 */
+        /*  F1 模式 hover 高亮：长方形 */
         [data-theme="f1"] .bubble-highlight {
             border-radius: 5px !important;
         }
@@ -489,7 +489,7 @@
         }
 
         /* ==========================
-        ✅ 🔗 引擎和自定义链接容器
+         引擎和自定义链接容器
         =========================== */
         .engines-section {
             width: 100%;
@@ -789,7 +789,7 @@
             }
         }
 
-        /* 🔥 顶部弹窗容器：支持叠加显示 */
+        /*顶部弹窗容器：支持叠加显示 */
         .f1-modal {
             position: fixed;
             top: 20px;
@@ -823,7 +823,7 @@
         }
 
         /* ==========================
-        ✅ 🌟 鼠标跟随光点 + 拖尾效果（全局适配主题）
+        	鼠标跟随光点 + 拖尾效果（全局适配主题）
         =========================== */
         .mouse-follower {
             position: fixed;
@@ -880,10 +880,10 @@
     </style>
 </head>
 <body>
-    <!-- 🎨 涂鸦画布 -->
+    <!-- 涂鸦画布 -->
     <canvas id="doodleCanvas"></canvas>
 
-    <!-- 🎨 涂鸦控制按钮 -->
+    <!-- 涂鸦控制按钮 -->
     <div class="doodle-controls">
         <button class="doodle-btn" id="toggleDoodle" title="启用/停用涂鸦">✏️</button>
         <button class="doodle-btn" id="clearDoodle" title="清除涂鸦">🗑️</button>
@@ -897,7 +897,7 @@
     <!-- F1TI入口按钮 -->
     <button id="f1tiEntry">F1TI</button>
 
-    <!-- 🌟 鼠标跟随光点元素 -->
+    <!-- 鼠标跟随光点元素 -->
     <div class="mouse-follower"></div>
     <div class="trail"></div>
     <div class="trail"></div>
@@ -1007,7 +1007,7 @@
         });
 
         // ==========================
-        // 🎨 炫彩模式涂鸦功能
+        // 炫彩模式涂鸦功能
         // ==========================
         const canvas = document.getElementById('doodleCanvas');
         const ctx = canvas.getContext('2d');
@@ -1140,7 +1140,7 @@
         let currentSearchEngine = document.querySelector('.engine.active')?.dataset.url || 'https://cn.bing.com/search?q=';
 
         // ==========================
-        // ✅ 🔗 自定义链接功能（修复版）
+        //  自定义链接功能（修复版）
         // ==========================
         const customLinksContainer = document.getElementById('customLinksContainer');
         const addLinkBtn = document.getElementById('addLinkBtn');
@@ -1406,7 +1406,7 @@
         });
 
         // ==========================
-        // ✅ 🌟 鼠标跟随光点 + 拖尾平滑动画
+        // 鼠标跟随光点 + 拖尾平滑动画
         // ==========================
         const follower = document.querySelector('.mouse-follower');
         const trails = document.querySelectorAll('.trail');
@@ -1441,7 +1441,7 @@
         animateFollower();
 	
 // ==========================
-// ✅ 记忆上次使用的主题模式
+// 记忆上次使用的主题模式
 // ==========================
 (function initThemeMemory() {
     const savedTheme = localStorage.getItem('appTheme');
@@ -1475,7 +1475,7 @@
 })();
 	
 	// ==========================
-// ✅ 删除标签确认功能
+//  删除标签确认功能
 // ==========================
 (function initDeleteConfirmation() {
     // 保存原始的 bindCustomLinkEvents 函数
@@ -1688,7 +1688,7 @@
 })();
 	
 	// ==========================
-// ✅ 涂鸦自动保存和恢复功能
+//  涂鸦自动保存和恢复功能
 // ==========================
 (function initDoodleAutoSave() {
     // 保存涂鸦到 localStorage
@@ -1859,7 +1859,7 @@
 })();
 
 // ==========================
-// ✅ 清除涂鸦确认功能（修复版）
+//  清除涂鸦确认功能（修复版）
 // ==========================
 (function initDoodleClearConfirmation() {
     const clearDoodleBtn = document.getElementById('clearDoodle');
@@ -2071,7 +2071,7 @@
 })();
 
 	// ==========================
-// ✅ 右下角模糊控制按钮（点击展开滑块面板，动画丝滑，自动保存）
+// 右下角模糊控制按钮（点击展开滑块面板，动画丝滑，自动保存）
 // ==========================
 (function initBlurControl() {
     // 创建控制按钮
