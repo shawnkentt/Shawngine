@@ -539,14 +539,25 @@
   let lastOnlineId = null;
   let lyricCooldown = 0;
   let lastLyric = '';
-  const lyricSongs = [ ['Coldplay', 'Yellow'], ['The Beatles', 'Here Comes The Sun'], ['Louis Armstrong', 'What A Wonderful World'], ['John Lennon', 'Imagine'], ['Oasis', 'Wonderwall'], ['Adele', 'Hello'] ];
-  let lastSong = -1;
+  // lyrics.ovh exposes a Deezer-backed suggest endpoint. Use a random search
+  // word, then choose a random result, so lyrics are not limited to a tiny
+  // hand-picked song list.
+  const lyricSearchTerms = ['love', 'night', 'home', 'dream', 'heart', 'blue', 'fire', 'time', 'world', 'rain', 'summer', 'light', 'beautiful', 'run', 'feel', 'one', 'free', 'music', 'gold', 'hope', 'fall', 'forever', 'dance', 'road', 'star'];
+  let lastSongKey = '';
   async function lyricQuote(signal, run) {
     if (Date.now() < lyricCooldown) throw new Error('Lyrics rate limit');
-    let song = Math.floor(Math.random() * lyricSongs.length);
-    if (song === lastSong) song = (song + 1) % lyricSongs.length;
-    lastSong = song;
-    const [artist, track] = lyricSongs[song];
+    const term = lyricSearchTerms[Math.floor(Math.random() * lyricSearchTerms.length)];
+    const suggestUrl = new URL('https://api.lyrics.ovh/suggest/' + encodeURIComponent(term));
+    const suggestResponse = await fetch(suggestUrl, { cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer', signal });
+    if (!suggestResponse.ok || !(suggestResponse.headers.get('content-type') || '').includes('json')) throw new Error('Song search unavailable');
+    const suggestions = await suggestResponse.json();
+    const songs = Array.isArray(suggestions.data) ? suggestions.data.filter(item => item?.readable !== false && item?.title && item?.artist?.name) : [];
+    if (!songs.length) throw new Error('No random song');
+    const candidates = songs.filter(item => item.artist.name + ' · ' + item.title !== lastSongKey);
+    const selected = (candidates.length ? candidates : songs)[Math.floor(Math.random() * (candidates.length || songs.length))];
+    const artist = String(selected.artist.name).trim();
+    const track = String(selected.title).trim();
+    lastSongKey = artist + ' · ' + track;
     const url = new URL('https://api.lyrics.ovh/v1/' + encodeURIComponent(artist) + '/' + encodeURIComponent(track));
     const response = await fetch(url, { signal, credentials: 'omit', referrerPolicy: 'no-referrer' });
     if (response.status === 429 || response.status === 503) {
