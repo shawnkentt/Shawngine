@@ -543,15 +543,19 @@
   // word, then choose a random result, so lyrics are not limited to a tiny
   // hand-picked song list.
   const lyricSearchTerms = ['love', 'night', 'home', 'dream', 'heart', 'blue', 'fire', 'time', 'world', 'rain', 'summer', 'light', 'beautiful', 'run', 'feel', 'one', 'free', 'music', 'gold', 'hope', 'fall', 'forever', 'dance', 'road', 'star'];
+  const lyricArtistQueries = ['Daniel Caesar', 'Frank Ocean', 'Coldplay', 'Justin Bieber', 'Adele', 'Ed Sheeran', 'Tyler, The Creator', 'Kanye West', 'Oasis', 'Radiohead', 'Pink Floyd', 'Green Day', 'SZA', 'The 1975'];
+  const lyricArtists = new Set(['daniel caesar', 'frank ocean', 'coldplay', 'justin bieber', 'adele', 'ed sheeran', 'tyler, the creator', 'tyler the creator', 'kanye west', 'oasis', 'radiohead', 'pink floyd', 'green day', 'greenday', 'sza', 'the 1975']);
   let lastSongKey = '';
   async function lyricQuote(signal, run) {
     if (Date.now() < lyricCooldown) throw new Error('Lyrics rate limit');
-    const term = lyricSearchTerms[Math.floor(Math.random() * lyricSearchTerms.length)];
+    const term = Math.random() < 0.8
+      ? lyricArtistQueries[Math.floor(Math.random() * lyricArtistQueries.length)]
+      : lyricSearchTerms[Math.floor(Math.random() * lyricSearchTerms.length)];
     const suggestUrl = new URL('https://api.lyrics.ovh/suggest/' + encodeURIComponent(term));
     const suggestResponse = await fetch(suggestUrl, { cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer', signal });
     if (!suggestResponse.ok || !(suggestResponse.headers.get('content-type') || '').includes('json')) throw new Error('Song search unavailable');
     const suggestions = await suggestResponse.json();
-    const songs = Array.isArray(suggestions.data) ? suggestions.data.filter(item => item?.readable !== false && item?.title && item?.artist?.name) : [];
+    const songs = Array.isArray(suggestions.data) ? suggestions.data.filter(item => item?.readable !== false && item?.title && item?.artist?.name && lyricArtists.has(String(item.artist.name).trim().toLowerCase())) : [];
     if (!songs.length) throw new Error('No random song');
     const candidates = songs.filter(item => item.artist.name + ' · ' + item.title !== lastSongKey);
     const selected = (candidates.length ? candidates : songs)[Math.floor(Math.random() * (candidates.length || songs.length))];
